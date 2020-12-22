@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{pythontex}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage{comment}
+\usepackage[hidelinks]{hyperref}
+
+% The content below will eventually be moved to a .sty file
+% and released on CTAN to be available in LaTeX package managers.
+
+% Redefine the standard puyo colors (overwrites TikZ).
+\newcommand{\newcolor}[2]{
+	\definecolor{#1}{RGB}{#2}
+	\colorlet{dark#1}{#1!80!black}
+}
+\newcolor{red}{255,82,98}
+\newcolor{green}{82,213,98}
+\newcolor{blue}{32,115,213}
+\newcolor{yellow}{255,220,24}
+\newcolor{purple}{131,90,213}
+\newcolor{gray}{180,172,189}
+
+\begin{pycode}
+pytex.add_dependencies("puyo.py")
+import puyo
+\end{pycode}
+
+% The puyo environment is a tikzpicture environment, the argument
+% is the scaling. Convenient scalings are provided as \puyobig and \puyosmall.
+% Puyo markers and board position labels are very small when scaled down.
+\def\puyosmall{0.34}
+\def\puyobig{0.65}
+\newenvironment{puyo}[1]
+	{\begin{tikzpicture}[scale=#1, every node/.style={transform shape}]}
+	{\end{tikzpicture}}
+
+% \puyoboard takes several arguments:
+% #1 - number of columns
+% #2 - number of rows
+% #3 - number of hidden rows
+% #4 - boardpuyos definition
+% #5 - nextpuyos definition
+% #6 - show labels boolean
+\newcommand{\puyoboard}[6]{\pyc{puyo.puyoboard(#1,#2,#3,"#4","#5",#6)}}
+
+% \puyomarker takes several arguments:
+% #1 - column identifier (a number)
+% #2 - row identifier (a lowercase letter sequence)
+% #3 - the color outline
+% #4 - the letter inside
+\newcommand{\puyomarker}[4]{\pyc{puyo.puyomarker("#1",#2,"#3","#4")}}
+
+% \puyogrid is a convenient command derived from \puyoboard.
+\newcommand{\puyogrid}[4]{\begin{puyo}{\puyosmall}\puyoboard{#1}{#2}{#3}{#4}{}{False}\end{puyo}}
+
+% The content below is a demonstration.
+
+\begin{document}
+
+\noindent\begin{minipage}{0.5\textwidth}
+	\begin{puyo}{\puyobig}
+		\puyoboard{6}{12}{1}{rbbggppbgggbr/rbrngbpn/yrynbb/yybrrn/bbpryyn/pbppryn}{rr/gg/yr}{True}
+		\puyomarker{f}{8}{r}{A}
+		\puyomarker{f}{9}{r}{A}
+		\puyomarker{d}{7}{g}{B}
+		\puyomarker{d}{8}{g}{B}
+		\puyomarker{e}{8}{y}{C}
+		\puyomarker{e}{9}{r}{C}		
+	\end{puyo}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+	\begin{center}\Huge Puyo\TeX\end{center}
+	A \LaTeX{} package for quickly typesetting board states of Puyo Puyo games.\par \vskip 1em
+	Supports large and small boards with arbitrary shape, hidden rows, current and next puyos, position labels and move planning indicators.\par \vskip 1em
+	Source code available for download on GitHub or your favorite \TeX{} repository. Package requires TikZ and Python\TeX{} (Python3).\par \vskip 1em
+	Move planning markers shown at left. Tailing variations on the Great Tanaka Rensa (GTR) shown below.\par \vskip 1em
+	Created by \href{https://twitter.com/terramyst1}{\color{darkblue}terramyst}.
+\end{minipage}
+
+\begin{figure}[!htp]
+	\centering
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbrg/pbprg/prrgg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbrgg/pbrg/rrppg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbgg/pbprg/rrrpg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbrg/pbrpg/rrgpg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbrg/pbrgp/rggrp}}
+
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbrg/pbprg/rprgg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbrg/rbrpg/rppgg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbgg/pbgrp/rrrpg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/gbrg/pbrpg/rrppg}}
+	
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbpg/rbprg/rprgg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbgg/pbrrg/rrppg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/gbpg/pbprg/rrrgp}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}
+	
+	\subfloat{\puyogrid{6}{6}{0}{grr/grg/bgb/pbpg/rbrpg/rrpgg}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}\hfil
+	\subfloat{\puyogrid{6}{6}{0}{}}
+\end{figure}
+
+\end{document}
