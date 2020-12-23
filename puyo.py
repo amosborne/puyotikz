@@ -1,6 +1,7 @@
 import numpy as np
 import itertools
 import string
+import re
 
 
 # Wraps a function which returns a string. Prints the result with a ";".
@@ -31,17 +32,33 @@ def puyoboard(cols, rows, hrows, boardpuyos, nextpuyos, label):
         draw_labels(cols, rows, hrows, nextpuyos)
 
         
-@print_tikz
-def puyomarker(colid, rowid, puyo, lid):
-    rowidx = rowid - 1
-    colidx = next(idx for idx, x in enumerate(excel_cols(upper=False)) if x == colid)
-    pos = colidx + 0.5, rowidx + 0.5
-    
-    tikz = "\\draw[{0},thick]".format("dark" + COLORS[puyo])
-    tikz += " ({0},{1}) circle ({2});".format(*pos, PUYO_RADIUS)
-    tikz += " \\node[anchor=center, font=\sffamily]"
-    tikz += " at ({0},{1}) {{\\small {2}}}".format(*pos, lid)
-    return tikz
+def puyomarker(config):
+    pattern = "^([a-z]+)(\d+)([rygbpn])([A-Z])$"
+
+    @print_tikz
+    def singlemark(subconfig):
+        match = re.search(pattern, subconfig)
+        if match is None:
+            raise UserWarning("Bad puyo marker format string.")
+        else:
+            colid, rowid, puyo, lid = match.groups()
+            
+        rowidx = int(rowid) - 1
+        colidx = next(idx for idx, x in enumerate(excel_cols(upper=False)) if x == colid)
+        pos = colidx + 0.5, rowidx + 0.5
+        
+        tikz = "\\draw[{0},thick]".format("dark" + COLORS[puyo])
+        tikz += " ({0},{1}) circle ({2});".format(*pos, PUYO_RADIUS)
+        tikz += " \\node[anchor=center, font=\sffamily]"
+        tikz += " at ({0},{1}) {{\\small {2}}}".format(*pos, lid)
+        return tikz    
+
+    subconfigs = config.split("/")
+    if subconfigs == [""]:
+        return
+    else:
+        for subconfig in subconfigs:
+            singlemark(subconfig)
 
 
 def draw_board(cols, rows, hrows, boardpuyos):

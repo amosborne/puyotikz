@@ -4,6 +4,7 @@
 \RequirePackage{pythontex}
 \RequirePackage{tikz}
 \RequirePackage{keyval}
+
 \pyc{import puyo}
 
 \def\puyosmallscale{0.34}
@@ -36,21 +37,7 @@
 		                label=pytex.context.showlabels=="True")}
 }
 
-% \puyoboard takes several arguments:
-% #1 - number of columns
-% #2 - number of rows
-% #3 - number of hidden rows
-% #4 - boardpuyos definition
-% #5 - nextpuyos definition
-% #6 - show labels boolean
-% \newcommand{\puyoboard}[6]{\pyc{puyo.puyoboard(#1,#2,#3,"#4","#5",#6)}}
-
-% \puyomarker takes several arguments:
-% #1 - column identifier (a number)
-% #2 - row identifier (a lowercase letter sequence)
-% #3 - the color outline
-% #4 - the letter inside
-\newcommand{\puyomarker}[4]{\pyc{puyo.puyomarker("#1",#2,"#3","#4")}}
+\newcommand{\puyomarker}[1]{\pyc{puyo.puyomarker("#1")}}
 
 \newcommand{\puyocolor}[2]{
 	\definecolor{#1puyo}{RGB}{#2}
