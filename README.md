@@ -9,7 +9,11 @@ Please see the concise PuyoTeX documentation for more details on usage, installa
 Created by [terramyst](https://twitter.com/terramyst1).
 
 ```tex
-\begin{puyotikz}
-  \puyoboard{6}{12}{1}{rgg/rgr/br/g}{rr/rb/gg}{True}
+% Example usage.
+\begin{puyotikz}[\puyosmallscale]
+    \puyoboard{rg/rgr/br/g}{rr/rb/gg}
+    \puyomarker{e1rA/e2rA/f1bB/f2rB}
 \end{puyotikz}
+
+\puyogrid[nrows=4, ncols=4]{bbb/rrrb/gggr/yyyg}
 ```
