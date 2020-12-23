@@ -39,6 +39,13 @@
 
 \newcommand{\puyomarker}[1]{\pyc{puyo.puyomarker("#1")}}
 
+\newcommand{\puyogrid}[2][]{
+	\setkeys{puyoboard}{nhidrows=0, showlabels=False}
+	\begin{puyotikz}[\puyosmallscale]
+		\puyoboard[#1]{#2}{}
+	\end{puyotikz}
+}
+
 \newcommand{\puyocolor}[2]{
 	\definecolor{#1puyo}{RGB}{#2}
 	\colorlet{dark#1puyo}{#1puyo!80!black}
