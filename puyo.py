@@ -13,9 +13,18 @@ def print_tikz(func):
 
 PUYO_RADIUS, PUYO_JOIN = 0.45, 0.25
 COLORS = {"r":"red", "y":"yellow", "g":"green", "b":"blue", "p":"purple", "n":"gray"}
+for key, value in COLORS.items():
+    COLORS[key] = value + "puyo"
 
 
 def puyoboard(cols, rows, hrows, boardpuyos, nextpuyos, label):
+    if not cols > 0:
+        raise UserWarning("{0} columns must be atleast 1.".format(cols))
+    if not rows > 0:
+        raise UserWarning("{0} rows must be atleast 1.".format(rows))
+    if hrows < 0:
+        raise UserWarning("{0} hidden rows must be atleast 0.".format(hrows))
+    
     draw_board(cols, rows, hrows, boardpuyos)
     draw_nextpuyos(cols, rows, nextpuyos)
     if label:
@@ -54,7 +63,11 @@ def draw_board(cols, rows, hrows, boardpuyos):
 
 def draw_nextpuyos(cols, rows, nextpuyos):
     nextpuyos = nextpuyos.split("/")
+    if nextpuyos == [""]:
+        return
     for idx, puyos in enumerate(nextpuyos):
+        if not len(puyos) == 2:
+            raise UserWarning("Next puyos must be of length 2.")
         draw_puyos(puyos=[puyos],
                    origin=(cols + 0.75, rows - 1.5 - 3 * idx),
                    size=(1, 2))
@@ -73,6 +86,8 @@ def draw_labels(cols, rows, hrows, nextpuyos):
         draw_label((0.5 + idx, -0.5), label)
 
     nextpuyoscount = len(nextpuyos.split("/"))
+    if nextpuyos.split("/") == [""]:
+        return
     for idx, label in zip(range(0, nextpuyoscount), excel_cols(upper=True)):
         draw_label((cols + 0.75, rows - 1.5 - 3 * idx), label, "\\small", "\\sffamily")
 
@@ -92,7 +107,12 @@ def draw_puyos(puyos=[], origin=(0, 0), size=(6, 12), nhidden=0):
     board = np.full((size[0], size[1] + nhidden), "")
     for ridx, col in enumerate(puyos):
         for cidx, puyo in enumerate(list(col)):
-            board[ridx, cidx] = puyo
+            if puyo not in COLORS.keys():
+                raise UserWarning("{0} is not a valid puyo identifier (rygbpn).".format(puyo))
+            try:
+                board[ridx, cidx] = puyo
+            except IndexError:
+                raise UserWarning("Puyo layout string has too many rows or columns.")
 
     # helper function for converting true position
     def true_pos(pos):
@@ -103,12 +123,14 @@ def draw_puyos(puyos=[], origin=(0, 0), size=(6, 12), nhidden=0):
         if puyo:
             draw_puyo(true_pos(pos), puyo)
 
-    # connect to adjacent puyos (except nuisance)
+    # connect to adjacent puyos (except nuisance and hidden row)
     for pos, puyo in np.ndenumerate(board):
         for direc in {(1, 0), (-1, 0), (0, 1), (0, -1)}:
             if not 0 <= pos[0] + direc[0] < board.shape[0]:
                 continue
-            elif not 0 <= pos[1] + direc[1] < board.shape[1]:
+            elif not 0 <= pos[1] + direc[1] < board.shape[1] - nhidden:
+                continue
+            elif not 0 <= pos[1] < board.shape[1] - nhidden:
                 continue
             
             other = board[pos[0] + direc[0], pos[1] + direc[1]]
@@ -127,7 +149,11 @@ def draw_puyos(puyos=[], origin=(0, 0), size=(6, 12), nhidden=0):
                 if puyo:
                     outline_puyo(true_pos(pos), direc, puyo, join=False)
                 continue
-            elif not 0 <= pos[1] + direc[1] < board.shape[1]:
+            elif not 0 <= pos[1] + direc[1] < board.shape[1] - nhidden:
+                if puyo:
+                    outline_puyo(true_pos(pos), direc, puyo, join=False)
+                continue
+            elif not 0 <= pos[1] < board.shape[1] - nhidden:
                 if puyo:
                     outline_puyo(true_pos(pos), direc, puyo, join=False)
                 continue

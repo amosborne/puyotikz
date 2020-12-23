@@ -1,0 +1,66 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{puyotex}[2020/12/22 1.0.0 PuyoTeX]
+
+\RequirePackage{pythontex}
+\RequirePackage{tikz}
+\RequirePackage{keyval}
+\pyc{import puyo}
+
+\def\puyosmallscale{0.34}
+\def\puyobigscale{0.65}
+
+\newenvironment{puyotikz}[1][\puyobigscale]
+	{\begin{tikzpicture}[scale=#1, every node/.style={transform shape}]}
+	{\end{tikzpicture}}
+
+\define@key{puyoboard}{ncols}{\def\puyo@ncols{#1}}
+\define@key{puyoboard}{nrows}{\def\puyo@nrows{#1}}
+\define@key{puyoboard}{nhidrows}{\def\puyo@nhidrows{#1}}
+\define@key{puyoboard}{showlabels}{\def\puyo@showlabels{#1}}
+\setkeys{puyoboard}{ncols=6, nrows=12, nhidrows=1, showlabels=True}
+
+\setpythontexcontext{
+	ncols=\puyo@ncols,
+	nrows=\puyo@nrows,
+	nhidrows=\puyo@nhidrows,
+	showlabels=\puyo@showlabels
+}
+
+\newcommand{\puyoboard}[3][]{
+	\setkeys{puyoboard}{#1}
+	\pyc{puyo.puyoboard(cols=int(pytex.context.ncols), %
+		                rows=int(pytex.context.nrows), %
+		                hrows=int(pytex.context.nhidrows), %
+		                boardpuyos="#2", %
+		                nextpuyos="#3", %
+		                label=pytex.context.showlabels=="True")}
+}
+
+% \puyoboard takes several arguments:
+% #1 - number of columns
+% #2 - number of rows
+% #3 - number of hidden rows
+% #4 - boardpuyos definition
+% #5 - nextpuyos definition
+% #6 - show labels boolean
+% \newcommand{\puyoboard}[6]{\pyc{puyo.puyoboard(#1,#2,#3,"#4","#5",#6)}}
+
+% \puyomarker takes several arguments:
+% #1 - column identifier (a number)
+% #2 - row identifier (a lowercase letter sequence)
+% #3 - the color outline
+% #4 - the letter inside
+\newcommand{\puyomarker}[4]{\pyc{puyo.puyomarker("#1",#2,"#3","#4")}}
+
+\newcommand{\puyocolor}[2]{
+	\definecolor{#1puyo}{RGB}{#2}
+	\colorlet{dark#1puyo}{#1puyo!80!black}
+}
+\puyocolor{red}{255,82,98}
+\puyocolor{green}{82,213,98}
+\puyocolor{blue}{32,115,213}
+\puyocolor{yellow}{255,220,24}
+\puyocolor{purple}{131,90,213}
+\puyocolor{gray}{180,172,189}
+
+\endinput
