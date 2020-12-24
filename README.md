@@ -1,12 +1,14 @@
-# PuyoTeX
+# PuyoTikZ
 
 A LaTeX package for quickly typesetting board states of Puyo Puyo games.
 
 Supports large and small boards with arbitrary shape, hidden rows, current and next puyos, labels and move planning markers. Source code available for download on [GitHub](https://github.com/amosborne/puyotex) or your favorite TeX repository. Package requires [Python3](https://www.python.org/) in support of scripts driven by [PythonTeX](https://github.com/gpoore/pythontex).
 
-Please see the PuyoTeX documentation for more details on usage, installation, and known limitations.
+Please see the PuyoTikZ documentation for more details on usage, installation, and known limitations.
 
 Created by [terramyst](https://twitter.com/terramyst1).
+
+MIT License.
 
 ```tex
 % Example usage.

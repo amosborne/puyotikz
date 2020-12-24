@@ -1,3 +1,7 @@
+# PuyoTikZ package for LaTeX.
+# Created by amosborne (GitHuB) / terramyst (Twitter).
+# MIT License
+
 import numpy as np
 import itertools
 import string
