@@ -1,5 +1,5 @@
 % PuyoTikZ package for LaTeX.
-% Created by amosborne (GitHuB) / terramyst (Twitter).
+% Created by amosborne (GitHub) / terramyst (Twitter).
 % MIT License
 
 \documentclass{article}
@@ -26,7 +26,7 @@
 \newcommand{\cmd}[1]{{\small\textbackslash\texttt{#1}}}
 \newcommand{\codepar}[2]{\paragraph{\color{darkgreenpuyo}\code{#1} #2.}\mbox{}\par}
 
-\newcommand{\github}{\link{https://github.com/amosborne/puyotex}{GitHub}\xspace}
+\newcommand{\github}{\link{https://github.com/amosborne/puyotikz}{GitHub}\xspace}
 \newcommand{\python}{\link{https://www.python.org/download/releases/3.0/}{Python3}\xspace}
 \newcommand{\anaconda}{\link{https://www.anaconda.com/products/individual}{Anaconda}\xspace}
 \newcommand{\pypygments}{\link{https://pygments.org/}{Pygments}\xspace}
@@ -177,7 +177,7 @@ The \cmd{puyogrid} macro is provided as an example derived from \cmd{puyoboard}.
 The user is encouraged to construct their own derived macros in similar fashion for their intended purpose.
 
 \begin{puyolisting}
-	% source code \puyogrid definition from puyotex.sty
+	% source code \puyogrid definition from puyotikz.sty
 	\newcommand{\puyogrid}[2][]{
 		\setkeys{puyoboard}{nhidrows=0, showlabels=False}
 		\begin{puyotikz}[\puyosmallscale]

@@ -1,5 +1,5 @@
 # PuyoTikZ package for LaTeX.
-# Created by amosborne (GitHuB) / terramyst (Twitter).
+# Created by amosborne (GitHub) / terramyst (Twitter).
 # MIT License
 
 import numpy as np
