@@ -4,6 +4,7 @@
 \usepackage{xspace}
 \usepackage{ifmtarg}
 \usepackage{listings}
+\usepackage{graphicx}
 
 \lstset{basicstyle=\footnotesize\ttfamily,%
 	    language=[LaTeX]{TeX},%
@@ -40,7 +41,10 @@
 \begin{document}
 
 \begin{halfpage}
-	\includegraphics{subfigures/cover_big_board.pdf}
+	\begin{puyotikz}
+		\puyoboard{rbbggppbgggbr/rbrngbpn/yrynbb/yybrrn/bbpryyn/pbppryn}{rr/gg/yr}
+		\puyomarker{f8rA/f9rA/d7gB/d8gB/e8yC/e9rC}
+	\end{puyotikz}
 \end{halfpage}%
 \begin{halfpage}[Puyo\tex]
 	A \latex package for quickly typesetting board states of Puyo Puyo games.\parlineskip
@@ -48,11 +52,39 @@
 	Source code available for download on \github or your favorite \tex repository. Package requires \python in support of scripts driven by \pythontex.\parlineskip
 	Move planning markers shown at left. Tailing variations on the Great Tanaka Rensa (GTR) shown below.\parlineskip
 	Created by \link{https://twitter.com/terramyst1}{terramyst}.
-\end{halfpage}
+\end{halfpage}\\ \\
 
-\parline
-\noindent
-\includegraphics{subfigures/cover_small_boards.pdf}
+\noindent\makebox[\textwidth][c]{%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/pbprg/prrgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrgg/pbrg/rrppg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbgg/pbprg/rrrpg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/pbrpg/rrgpg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/pbrgp/rggrp}%
+}\\
+
+\noindent\makebox[\textwidth][c]{%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/pbprg/rprgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/rbrpg/rppgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbgg/pbgrp/rrrpg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/rbpg/pbprg/rprgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/gbrg/pbrpg/rrppg}%
+}\\
+		
+\noindent\makebox[\textwidth][c]{%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbpg/rbprg/rprgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbgg/pbrrg/rrppg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/gbpg/pbprg/rrrgp}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbbg/rggrp/rgrpp}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/rgb/pbgr/pbgrr/gbgpp}%
+}\\
+
+\noindent\makebox[\textwidth][c]{%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbpg/rbrpg/rrpgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/rbrpg/rppgg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/pbrg/pbprg/prggr}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/bbpg/ppgrg/rprrg}%
+	\puyogrid[nrows=6, ncols=6]{grr/grg/bgb/brgp/brrgp/rgppg}%
+}
 
 \section{Installation}
 \subsection{Python3 and PythonTeX}
