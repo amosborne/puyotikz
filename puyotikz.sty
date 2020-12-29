@@ -3,13 +3,21 @@
 % MIT License
 
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{puyotikz}[2020/12/23 v1.0.0 PuyoTikZ]
+\ProvidesPackage{puyotikz}[2020/12/28 v1.0.1 PuyoTikZ]
 
 \RequirePackage{pythontex}
 \RequirePackage{tikz}
 \RequirePackage{keyval}
 
-\pyc{import puyotikz as puyo}
+\begin{pycode}
+import sys, subprocess
+ptha = subprocess.check_output(['kpsewhich', '-var-value=TEXMFDIST'], universal_newlines=True)
+ptha = ptha.rstrip('\n')
+pthb = ptha + '/scripts/puyotikz'
+sys.path.append(pthb)
+
+import puyotikz as puyo
+\end{pycode}
 
 \def\puyosmallscale{0.34}
 \def\puyobigscale{0.65}

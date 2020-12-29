@@ -12,6 +12,8 @@ MIT License.
 
 ```tex
 % Example usage.
+\usepackage{puyotikz}
+
 \begin{puyotikz}[\puyosmallscale]
     \puyoboard{rg/rgr/br/g}{rr/rb/gg}
     \puyomarker{e1rA/e2rA/f1bB/f2rB}
